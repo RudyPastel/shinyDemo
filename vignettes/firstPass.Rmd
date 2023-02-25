@@ -22,6 +22,17 @@ the data set and how best to represent it. As per the suggestion of the Tidy Tue
 team, I will focus on enabling visual comparisons. For now, I will exclude statistical
 analysis.
 
+## Used packages
+
+I will list here the packages used during the exploration. 
+I will load them here for convenience but will no do so in the package code.
+
+```{r}
+library(magrittr)
+library(ggplot2)
+```
+
+
 
 ## Data dictionary and a first reflexion 
 
@@ -47,13 +58,19 @@ hispanic origin of householder separated by year and income groups in USA.
 This definition suggests to compare quantities across races over the years. A
 typical representation would be to display time series colour coded by race. In 
 the case of income_distribution, one would have to represent the whole distribution
-for each race fo each year, which may be overwhelming. Depending on the plot,
-one may have to consider the year variable a discrete or continuous.
+for each race fo each year, which may be overwhelming. 
 
+Some variable definition considerations:
+
+* Depending on the plot, one may have to consider the year variable a discrete or continuous.
+* There may be some overlap between the races, the definition of which is already 
+  questionable.
+* The margin of error data may be irrelevant or uninformative to some viewers. 
+  Maybe they should only be displayed optionally.
 
 ## Download then load the file
 
-The file will be kept as a csv file wihin the package.
+The file will be kept as a csv file within the package.
 
 ```{r}
 filePath = system.file(package = 'shinyDemo', 'extdata', 'income_distribution.csv')
@@ -68,21 +85,103 @@ incomeDistribution <- readr::read_csv(file = filePath)
 ```
 ## A first look at the file
 
-Let us start with a file summary
+Let us start witht he first 100 rows to understand the structure of the file.
+
+```{r}
+head(x = incomeDistribution, n = 100)
+```
+
+For a give value of year, only the income_bracket and income_distribution columns
+change. This structure may be useful for some statistical analysis but is not
+directly suitable for visualisation. I will need to prepare the data before I
+display it.
+
+Let us continue with a file summary.
 
 ```{r}
 summary(incomeDistribution)
 ```
+
+There are two order of magnitudes between the minimal and the maximal value of number. 
+I should enbale zooming. Besides, some columns have missing data. Why? 
+Are the missing data randomly distributed?
+
+```{r}
+image(is.na(incomeDistribution))
+```
+
+There seems to be some structure in the NA distribution
  
-A few ideas to keep in mind:
+```{r}
+table(incomeDistribution$race)
+```
+
+The definition of the races is murky to me. Maybe the they are clear to the
+US public. If I have time, I should like the presentation to the ad hoc definition.
+Can I use this in the choice of colours?
+
+```{r}
+table(incomeDistribution$income_bracket)
+```
  
- * Some columns have missing data. Why?
- * The margin of error data may be irrelevant or uninformative to some viewers. 
-   Maybe they should only be displayed optionally.
+The income bracket were read as characters but are ordered categories / factors.
+   
+   
+   
    
 Broken down by year and race, there are three measurements i.e. number,
 income_median with income_med_moe and income_mean with income_mean_moe, and 
 derivative quantities i.e. income_bracket and income_distribution. This suggests
 to make five plots with the possibility to select which race is represented.
+
+
+## number + year ~ race
+
+Let us represent number of household by race of the years.
+
+```{r}
+# Take the columns you need and format them
+numberVsYearByRace = incomeDistribution[, c('number', 'year', 'race')]
+numberVsYearByRace = numberVsYearByRace[!duplicated(numberVsYearByRace), ]
+summary(numberVsYearByRace)
+```
+What is the actual missing value?
+
+```{r}
+numberVsYearByRace[is.na(numberVsYearByRace$number), ]
+```
+Why is this value missing?
+
+> Prior to being included in the "Asian" category in the 1980s, many Americans 
+> of South Asian descent usually classified themselves as Caucasian or other.
+>
+> — [Wikipedia](https://en.wikipedia.org/wiki/Asian_Americans)
+
+This should be a reminder that the definition fo these categories evolved over time.
+Visual comparison of this data alone will be misleading. I should have some
+warnings somewhere.
+
+Let us plot now.
+
+```{r}
+rawPlot = ggplot(data = numberVsYearByRace, mapping = aes(x = year, y = number, colour = race)) +
+  geom_line() + 
+  labs(
+    title = 'Number of household by racial group over the years in USA',
+    x = 'Year',
+    y = 'Number of households',
+    colour = 'Racial Group'
+  )
+rawPlot
+```
+
+As expected, the range of the number of households is too large for convenient 
+Inspection. Let us represent the race line independently.
+
+```{r}
+rawPlot + facet_grid(race ~ ., scales = 'free_y')
+```
+
+I need to display it conveniently for the users.
 
 

@@ -20,3 +20,6 @@ Suggests:
     rmarkdown,
     tufte
 VignetteBuilder: knitr
+Imports: 
+    ggplot2,
+    magrittr
