@@ -103,7 +103,7 @@ summary(incomeDistribution)
 ```
 
 There are two order of magnitudes between the minimal and the maximal value of number. 
-I should enbale zooming. Besides, some columns have missing data. Why? 
+I should enable zooming. Besides, some columns have missing data. Why? 
 Are the missing data randomly distributed?
 
 ```{r}
@@ -126,13 +126,10 @@ table(incomeDistribution$income_bracket)
  
 The income bracket were read as characters but are ordered categories / factors.
    
-   
-   
-   
 Broken down by year and race, there are three measurements i.e. number,
-income_median with income_med_moe and income_mean with income_mean_moe, and 
-derivative quantities i.e. income_bracket and income_distribution. This suggests
-to make five plots with the possibility to select which race is represented.
+income_median with income_med_moe and income_mean with income_mean_moe, and one
+derivative quantity i.e. income_bracket and income_distribution. This suggests
+to make four plots with the possibility to select which race is represented.
 
 
 ## number + year ~ race
@@ -291,3 +288,11 @@ rawPlot +
 The error margins decrease as the population size increases. This is of statistical
 importance They however do not seem to change the story here. This suggests
 to me that they could be omitted on the dashboard.
+
+
+## income_distribution + year ~ race
+
+Here comes the challenge: represent the income distribution by race over the years.
+
+
+
