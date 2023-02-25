@@ -229,3 +229,65 @@ The error margins decrease as the population size increases. This is of statisti
 importance They however do not seem to change the story here. This suggests
 to me that they could be omitted on the dashboard.
 
+
+## income_mean  + year ~ race
+
+Let us represent the mean household income by race over the years.
+
+```{r}
+# Take the columns you need and format them
+meanIncomeVsYearByRace = incomeDistribution[, c('income_mean', 'income_mean_moe' , 'year', 'race', 'number')]
+meanIncomeVsYearByRace = meanIncomeVsYearByRace[!duplicated(meanIncomeVsYearByRace), ]
+summary(meanIncomeVsYearByRace)
+```
+
+
+
+Let us have a look at the missing values.
+
+```{r}
+meanIncomeVsYearByRace[is.na(meanIncomeVsYearByRace$income_mean) | is.na(meanIncomeVsYearByRace$income_mean_moe),]
+```
+We discussed the "Asian Alone" earlier. Wikipedia may help with "White Alone, Not Hispanic".
+
+
+> In the 2000 Census, people were allowed to check more than one race in addition
+  to choosing "Latino". There was strong opposition to this from some civil rights
+  activists who feared that this would reduce the size of various racial minorities. 
+  The government responded by counting those who are white and of one minority race or 
+  ethnicity as minorities for the purposes of civil-rights monitoring and enforcement.
+> 
+> — [Wikipedia](https://en.wikipedia.org/wiki/Non-Hispanic_whites)
+
+Maybe this data was not properly collected before the 2000 Census. However,
+why one would have the income mean *without* margin of error, especially
+in the middle of the time series eludes me.
+
+
+```{r}
+rawPlot = ggplot(data = meanIncomeVsYearByRace, mapping = aes(x = year, y = income_mean, colour = race)) +
+  geom_line() + 
+  labs(
+    title = 'Income mean by racial group over the years in USA',
+    x = 'Year',
+    y = 'Income mean',
+    colour = 'Racial Group'
+  )
+rawPlot
+```
+
+I should look for a way to display mean and median together, at least for statisticians.
+
+
+Let us include error margins.
+
+```{r}
+# Take the columns you need and format them
+rawPlot +
+  geom_pointrange(aes(ymin = income_mean - income_mean_moe, 
+                      ymax = income_mean + income_mean_moe))
+```
+
+The error margins decrease as the population size increases. This is of statistical
+importance They however do not seem to change the story here. This suggests
+to me that they could be omitted on the dashboard.
