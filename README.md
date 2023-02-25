@@ -8,7 +8,7 @@
 
 The goal of `shinyDemo` is to demonstrate my Shiny programming skills to
 potential clients by building an app that allows users to interact with
-the data.
+some data.
 
 > With this exercise, we want to see your work in analytical and
 > programmatic terms. So, we’d like to see what software design you
@@ -18,7 +18,7 @@ the data.
 >
 > — A potential client
 
-Among the client suggestions, I picked to the [Tidy
+Among the client’s suggestions, I picked to the [Tidy
 Tuesdays](https://www.tidytuesday.com/) `Wealth and income over time`
 [repository](https://github.com/rfordatascience/tidytuesday/tree/master/data/2021/2021-02-09)
 data set called `income_distribution.csv`.
