@@ -1,12 +1,16 @@
 Package: shinyDemo
-Title: What the Package Does (One Line, Title Case)
+Title: Demonstrate my Shiny Programming Skills thanks to a Tidy Tuesdays data set
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person(given = "Rudy", 
+           family = "Pastel", 
+           email = "rudy.pastel@gmail.com",
+           role = c("aut", "cre")
+          )
+Description: Demonstrate my Shiny programming skills thanks to the 2021-02-09
+  Tidy Tuesdays "Wealth and income over time" repository data set 
+  "income_distribution.csv".
+License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0
