@@ -1,0 +1,88 @@
+---
+title: "A first pass at the data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{firstPass}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+As the data basis of my app, I picked to the [Tidy
+Tuesdays](https://www.tidytuesday.com/) `Wealth and income over time`
+[repository](https://github.com/rfordatascience/tidytuesday/tree/master/data/2021/2021-02-09)
+data set called `income_distribution.csv`. Before building the app, I need to know 
+the data set and how best to represent it. As per the suggestion of the Tidy Tuesday
+team, I will focus on enabling visual comparisons. For now, I will exclude statistical
+analysis.
+
+
+## Data dictionary and a first reflexion 
+
+I decide to trust the Tidy Tuesday team and admit their data is clean.
+`income_distribution.csv` is a cleaned version of the the raw data provided by
+the [Urban Institute](https://apps.urban.org/features/wealth-inequality-charts/)
+and the [US Census](https://www.census.gov/data/tables/time-series/demo/income-poverty/historical-income-households.html).
+This file documents households by total money income, race, and 
+hispanic origin of householder separated by year and income groups in USA.
+
+|variable            |class     |description |
+|:-------------------|:---------|:-----------|
+|year                |integer   | Year |
+|race                |character | Racial Group |
+|number              |double    | Number of households |
+|income_median       |integer   | Income median |
+|income_med_moe      |integer   | Income median margin of error |
+|income_mean         |integer   | Income mean |
+|income_mean_moe     |integer   | Income mean margin of error |
+|income_bracket      |character | Income bracket (9 total brackets between `<$15,000` and `>$200,000` |
+|income_distribution |double    | Income distribution as the percentage of each year/racial group - should add up to 100 for a specific year and race. |
+
+This definition suggests to compare quantities across races over the years. A
+typical representation would be to display time series colour coded by race. In 
+the case of income_distribution, one would have to represent the whole distribution
+for each race fo each year, which may be overwhelming. Depending on the plot,
+one may have to consider the year variable a discrete or continuous.
+
+
+## Download then load the file
+
+The file will be kept as a csv file wihin the package.
+
+```{r}
+filePath = system.file(package = 'shinyDemo', 'extdata', 'income_distribution.csv')
+if (filePath == ""){#If there is no file, download it
+  filePath = file.path(system.file(package = 'shinyDemo'), 'extdata', 'income_distribution.csv')
+  utils::download.file(
+    url ='https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_distribution.csv',
+    destfile = filePath
+  )
+}
+incomeDistribution <- readr::read_csv(file = filePath)
+```
+## A first look at the file
+
+Let us start with a file summary
+
+```{r}
+summary(incomeDistribution)
+```
+ 
+A few ideas to keep in mind:
+ 
+ * Some columns have missing data. Why?
+ * The margin of error data may be irrelevant or uninformative to some viewers. 
+   Maybe they should only be displayed optionally.
+   
+Broken down by year and race, there are three measurements i.e. number,
+income_median with income_med_moe and income_mean with income_mean_moe, and 
+derivative quantities i.e. income_bracket and income_distribution. This suggests
+to make five plots with the possibility to select which race is represented.
+
+
