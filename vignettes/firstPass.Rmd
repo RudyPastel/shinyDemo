@@ -85,7 +85,7 @@ incomeDistribution <- readr::read_csv(file = filePath)
 ```
 ## A first look at the file
 
-Let us start witht he first 100 rows to understand the structure of the file.
+Let us start with he first 100 rows to understand the structure of the file.
 
 ```{r}
 head(x = incomeDistribution, n = 100)
@@ -137,7 +137,7 @@ to make five plots with the possibility to select which race is represented.
 
 ## number + year ~ race
 
-Let us represent number of household by race of the years.
+Let us represent the number of households by race over the years.
 
 ```{r}
 # Take the columns you need and format them
@@ -184,4 +184,48 @@ rawPlot + facet_grid(race ~ ., scales = 'free_y')
 
 I need to display it conveniently for the users.
 
+
+## income_median  + year ~ race
+
+Let us represent the median household income by race over the years.
+
+```{r}
+# Take the columns you need and format them
+medianIncomeVsYearByRace = incomeDistribution[, c('income_median', 'income_med_moe' , 'year', 'race')]
+medianIncomeVsYearByRace = medianIncomeVsYearByRace[!duplicated(medianIncomeVsYearByRace), ]
+summary(medianIncomeVsYearByRace)
+```
+
+
+
+No missing value this time
+
+```{r}
+rawPlot = ggplot(data = medianIncomeVsYearByRace, mapping = aes(x = year, y = income_median, colour = race)) +
+  geom_line() + 
+  labs(
+    title = 'Income median by racial group over the years in USA',
+    x = 'Year',
+    y = 'Income median',
+    colour = 'Racial Group'
+  )
+rawPlot
+```
+
+This plot is ok. I definitively need to find a set of meaningful colours for
+each race group.
+
+
+Let us include error margins.
+
+```{r}
+# Take the columns you need and format them
+rawPlot +
+  geom_pointrange(aes(ymin = income_median - income_med_moe, 
+                      ymax = income_median + income_med_moe))
+```
+
+The error margins decrease as the population size increases. This is of statistical
+importance They however do not seem to change the story here. This suggests
+to me that they could be omitted on the dashboard.
 
