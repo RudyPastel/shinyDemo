@@ -1,2 +1,49 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
 # shinyDemo
-Demonstrate my Shiny programming skills thanks to a Tidy Tuesdays data set
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of `shinyDemo` is to demonstrate my Shiny programming skills to
+potential clients by building an app that allows users to interact with
+the data.
+
+> With this exercise, we want to see your work in analytical and
+> programmatic terms. So, we’d like to see what software design you
+> chose for your app. Also, we would like to know how you structure and
+> robustify your code. Finally, we are keen to understand how you employ
+> software quality assurance techniques and version control software.
+>
+> — A potential client
+
+Among the client suggestions, I picked to the [Tidy
+Tuesdays](https://www.tidytuesday.com/) `Wealth and income over time`
+[repository](https://github.com/rfordatascience/tidytuesday/tree/master/data/2021/2021-02-09)
+data set called `income_distribution.csv`.
+
+## Installation
+
+You can install the development version of `shinyDemo` from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("RudyPastel/shinyDemo")
+```
+
+## How to use shinyDemo
+
+Obviously, you should try the app out.
+
+``` r
+library(shinyDemo)
+## basic example code
+```
+
+More importantly however, read, analyse and evaluate the code and its
+history.
+
+Comments, suggestions and customer inquiries are welcome. Contact [Dr
+Rudy Pastel](mailto:rudy.pastelgmail.com).
