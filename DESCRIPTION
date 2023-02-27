@@ -15,7 +15,6 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0
 Suggests: 
-    ggridges,
     knitr,
     readr,
     rmarkdown,
@@ -24,4 +23,6 @@ VignetteBuilder: knitr
 Imports: 
     gganimate,
     ggplot2,
-    magrittr
+    ggridges,
+    magrittr,
+    shinydashboard
