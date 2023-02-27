@@ -29,11 +29,11 @@ visualiseIncomeDataTabItem = function(id){
 
     fluidRow(
       column(width = 4),
-      column(width = 4,'Select quantities'),
-      column(width = 4, 'Optionally options')
+      column(width = 4, visualiseIncomeDataSelectionUi(id = NS(id, "visualiseIncomeData"))),
+      column(width = 4, visualiseIncomeDataOptionUi(id = NS(id, "visualiseIncomeData")))
     ),
     fluidRow(
-      column(width = 12, 'Show plots')
+      column(width = 12, visualiseIncomeDataPlotUi(id = NS(id, "visualiseIncomeData")))
     )
   )
 }
@@ -46,6 +46,7 @@ visualiseIncomeDataServer = function(id){
     module =  function(input, output, session) {
       # Build the server here
       # There is no need to wrap inputId statements
+      visualiseIncomeDataOptionUi(id = "visualiseIncomeData")
     })
 }
 
