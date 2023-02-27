@@ -521,3 +521,16 @@ ggplot(data = incomeDistributtionVsYearByRace[,],
 ```
 
 Unreadable. Do not show it.
+
+# Conclusion
+
+The topic being income inequality in the USA, I will display in decreasing 
+interest order,
+
+* income_distribution + income_bracket ~ race  + year
+* income_median  + year ~ race 
+* income_mean  + year ~ race 
+* number + year ~ race
+
+I will embed this in a shiny dashboard to allow the flexibility of adding other
+tabs.
