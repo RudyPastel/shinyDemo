@@ -295,7 +295,7 @@ importance They however do not seem to change the story here. This suggests
 to me that they could be omitted on the dashboard.
 
 
-## income_distribution + year ~ race
+## income_distribution + income_bracket ~ race  + year
 
 Here comes the challenge: represent the income distribution by race over the years.
 
@@ -452,3 +452,7 @@ ggplot(data = incomeDistributtionVsYearByRace,
 ```
 The user should be able to pick across the global view, the animation or a yearly
 view. I prefer to stick to the discrete versions.
+
+
+## income_bracket + year ~ race
+
