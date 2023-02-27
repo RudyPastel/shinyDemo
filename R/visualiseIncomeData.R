@@ -26,14 +26,16 @@ visualiseIncomeDataTabItem = function(id){
     # Build the UI here
     # Remember to wrap all inputId statements as follows:
     # inputId = shiny::NS(id, "<myInputId>")
-
-    fluidRow(
-      column(width = 4),
-      column(width = 4, visualiseIncomeDataSelectionUi(id = NS(id, "visualiseIncomeData"))),
-      column(width = 4, visualiseIncomeDataOptionUi(id = NS(id, "visualiseIncomeData")))
-    ),
-    fluidRow(
-      column(width = 12, visualiseIncomeDataPlotUi(id = NS(id, "visualiseIncomeData")))
+    column(
+      width = 12,
+      align = 'center',
+      fluidRow(
+        column(width = 6, visualiseIncomeDataSelectionUi(id = NS(id, "visualiseIncomeData"))),
+        column(width = 6, visualiseIncomeDataOptionUi(id = NS(id, "visualiseIncomeData")))
+      ),
+      fluidRow(
+        column(width = 12, visualiseIncomeDataPlotUi(id = NS(id, "visualiseIncomeData")))
+      )
     )
   )
 }
