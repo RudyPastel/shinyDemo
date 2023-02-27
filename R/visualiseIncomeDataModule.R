@@ -69,7 +69,7 @@ visualiseIncomeDataPlotServer  = function(id){
                            value = median(unique(incomeDataSet()[['year']]), na.rm = TRUE),
                            step = 1,
                            sep = '',
-                           animate = animationOptions(interval = 100)
+                           animate = animationOptions(interval = 1500)
                            )
         }else {
           ui = NULL
@@ -79,8 +79,15 @@ visualiseIncomeDataPlotServer  = function(id){
 
       # Build the plot
       output$plot = renderPlot({
-        plot(cars)
-      })
+        if (input$selection %in% c('incomeDistribution')) {
+          req(input$selectedYear)
+          thePlot = plotIncomeDistribution(year = as.integer(input$selectedYear))
+        }else {
+          thePlot = plotPlaceHolder()
+        }
+        thePlot
+      },
+      height = 1000)
     })
 
 

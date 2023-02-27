@@ -38,6 +38,32 @@ getIncomeDataSet = function(){
     labels = orderedBrackets,
     ordered = TRUE)
 
+  # # Format the year
+  # orderedYear = sort(unique(incomeDistribution$year))
+  # incomeDistribution$year = factor(
+  #   x = incomeDistribution$year,
+  #   levels = orderedYear,
+  #   labels = orderedYear,
+  #   ordered = TRUE)
+
+  # Format race
+  orderedRace = c(
+    "All Races",
+    "White Alone",
+    "White Alone, Not Hispanic",
+    "Hispanic (Any Race)",
+    "Asian Alone or in Combination",
+    "Asian Alone",
+    "Black Alone or in Combination",
+    "Black Alone"
+  )
+  incomeDistribution$race = factor(
+    x = incomeDistribution$race,
+    levels = orderedRace,
+    labels = orderedRace,
+    ordered = TRUE)
+
+
   # The rest is numeric
   for (columnName in setdiff(expectedColumns, c('race', 'income_bracket'))){
     incomeDistribution[[columnName]] = as.numeric(incomeDistribution[[columnName]])
