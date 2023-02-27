@@ -11,8 +11,8 @@ plotIncomeDistribution = function(year){
 
   # Get the raw data and format it
   incomeDistribution = getIncomeDataSet()
-  yLimits = c(floor(min(incomeDistribution$income_distribution)),
-             ceiling(max(incomeDistribution$income_distribution)))
+  yLimits = c(floor(min(incomeDistribution$income_distribution, na.rm = TRUE)),
+             ceiling(max(incomeDistribution$income_distribution, na.rm = TRUE)))
   incomeDistribution = incomeDistribution[incomeDistribution$year == year, ]
 
   # Plot the data
@@ -38,8 +38,8 @@ plotIncomeDistribution = function(year){
 plotIncomeMedian = function(includeMarginOfError = FALSE){
   # Get the raw data and format it
   incomeDistribution = getIncomeDataSet()
-  yLimits = c(round( range(incomeDistribution$income_median + incomeDistribution$income_med_moe)[1], digits = - 3) - 5000,
-              round( range(incomeDistribution$income_median + incomeDistribution$income_med_moe)[2], digits = - 3) + 5000)
+  yLimits = c(round( range(incomeDistribution$income_median + incomeDistribution$income_med_moe, na.rm = TRUE)[1], digits = - 3) - 5000,
+              round( range(incomeDistribution$income_median + incomeDistribution$income_med_moe, na.rm = TRUE)[2], digits = - 3) + 5000)
   # Plot the data
   rawPlot = ggplot2::ggplot(data = incomeDistribution,
                    mapping = ggplot2::aes(x = year, y = income_median, colour = race)) +
@@ -61,6 +61,41 @@ plotIncomeMedian = function(includeMarginOfError = FALSE){
           ymin = income_median - income_med_moe,
           ymax = income_median + income_med_moe)
         )
+  }
+
+  #Return the plot
+  return(rawPlot)
+
+
+}
+
+#' @rdname plotIncomeDistribution
+plotIncomeMean = function(includeMarginOfError = FALSE){
+  # Get the raw data and format it
+  incomeDistribution = getIncomeDataSet()
+  yLimits = c(round( range(incomeDistribution$income_mean + incomeDistribution$income_mean_moe, na.rm = TRUE)[1], digits = - 3) - 5000,
+              round( range(incomeDistribution$income_mean + incomeDistribution$income_mean_moe, na.rm = TRUE)[2], digits = - 3) + 5000)
+  # Plot the data
+  rawPlot = ggplot2::ggplot(data = incomeDistribution,
+                            mapping = ggplot2::aes(x = year, y = income_mean, colour = race)) +
+    ggplot2::geom_line() +
+    ggplot2::labs(
+      title = 'Income mean by racial group in USA',
+      x = 'Year',
+      y = 'Income mean',
+      colour = 'Racial Group'
+    ) +
+    ggplot2::scale_y_continuous(limits = yLimits)  +
+    ggplot2::theme(text = ggplot2::element_text(size = 16))
+
+  # Optionally include the margin of error
+  if (includeMarginOfError){
+    rawPlot = rawPlot +
+      ggplot2::geom_pointrange(
+        mapping = ggplot2::aes(
+          ymin = income_mean - income_mean_moe,
+          ymax = income_mean + income_mean_moe)
+      )
   }
 
   #Return the plot

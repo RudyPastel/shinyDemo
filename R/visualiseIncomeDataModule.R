@@ -85,6 +85,9 @@ visualiseIncomeDataPlotServer  = function(id){
         } else if (input$selection == 'medianIncome') {
           req(input$includeMarginOfError)
           thePlot = plotIncomeMedian(includeMarginOfError = as.logical(input$includeMarginOfError))
+        } else if (input$selection == 'meanIncome') {
+          req(input$includeMarginOfError)
+          thePlot = plotIncomeMean(includeMarginOfError = as.logical(input$includeMarginOfError))
         } else {
           thePlot = plotPlaceHolder()
         }
