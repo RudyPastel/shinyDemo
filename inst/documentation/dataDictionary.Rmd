@@ -1,0 +1,23 @@
+# Description of the income data set 
+
+
+The data set is the [Tidy Tuesdays](https://www.tidytuesday.com/) `Wealth and income over time`
+[repository](https://github.com/rfordatascience/tidytuesday/tree/master/data/2021/2021-02-09)
+data set called `income_distribution.csv`. `income_distribution.csv` is a cleaned 
+version of the the raw data provided by
+the [Urban Institute](https://apps.urban.org/features/wealth-inequality-charts/)
+and the [US Census](https://www.census.gov/data/tables/time-series/demo/income-poverty/historical-income-households.html).
+This file documents households by total money income, race, and 
+Hispanic origin of householder separated by year and income groups in USA.
+
+|variable            |class     |description |
+|:-------------------|:---------|:-----------|
+|year                |integer   | Year |
+|race                |character | Racial Group |
+|number              |double    | Number of households |
+|income_median       |integer   | Income median |
+|income_med_moe      |integer   | Income median margin of error |
+|income_mean         |integer   | Income mean |
+|income_mean_moe     |integer   | Income mean margin of error |
+|income_bracket      |character | Income bracket (9 total brackets between `<$15,000` and `>$200,000` |
+|income_distribution |double    | Income distribution as the percentage of each year/racial group - should add up to 100 for a specific year and race. |
