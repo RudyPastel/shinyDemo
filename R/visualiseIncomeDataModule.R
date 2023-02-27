@@ -82,7 +82,10 @@ visualiseIncomeDataPlotServer  = function(id){
         if (input$selection %in% c('incomeDistribution')) {
           req(input$selectedYear)
           thePlot = plotIncomeDistribution(year = as.integer(input$selectedYear))
-        }else {
+        } else if (input$selection == 'medianIncome') {
+          req(input$includeMarginOfError)
+          thePlot = plotIncomeMedian(includeMarginOfError = as.logical(input$includeMarginOfError))
+        } else {
           thePlot = plotPlaceHolder()
         }
         thePlot
