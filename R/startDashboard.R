@@ -38,12 +38,12 @@ dashboardUi = function(){
     ),
     sidebar = shinydashboard::dashboardSidebar(
       shinydashboard::sidebarMenu(
-
+        visualiseIncomeDataMenuItem(id = 'visualiseIncomeData')
       )
     ),
     body = shinydashboard::dashboardBody(
       shinydashboard::tabItems(
-
+        visualiseIncomeDataTabItem(id = 'visualiseIncomeData')
       )
     )
   )
@@ -60,7 +60,7 @@ dashboardUi = function(){
 #' The UI definition of the app (for example, a call to fluidPage() with nested controls).
 dashboardServer = function(){
  serverFunction = function(input, output, session) {
-
+   visualiseIncomeDataServer(id = 'visualiseIncomeData')
  }
  return(serverFunction)
 }

@@ -10,7 +10,7 @@ NULL
 #' @rdname visualiseIncomeData
 visualiseIncomeDataMenuItem = function(id){
     shinydashboard::menuItem(
-        text = "Name of the extension as displayed in dashboard",
+        text = "Visualisation",
         tabName = shiny::NS(id, "visualiseIncomeData")
     )
 }
