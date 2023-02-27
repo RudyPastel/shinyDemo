@@ -33,8 +33,8 @@ startDashboard = function(
 dashboardUi = function(){
   shinydashboard::dashboardPage(
     header = shinydashboard::dashboardHeader(
-      title = sprintf(fmt = 'shinyDemo V %s', utils::packageVersion(pkg = 'shinyDemo')),
-      titleWidth = '20%'
+      title = sprintf(fmt = 'Income Distribution in USA (V %s)', utils::packageVersion(pkg = 'shinyDemo')),
+      titleWidth = '100%'
     ),
     sidebar = shinydashboard::dashboardSidebar(
       shinydashboard::sidebarMenu(
