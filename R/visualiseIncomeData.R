@@ -46,7 +46,7 @@ visualiseIncomeDataServer = function(id){
     module =  function(input, output, session) {
       # Build the server here
       # There is no need to wrap inputId statements
-      visualiseIncomeDataOptionUi(id = "visualiseIncomeData")
+      visualiseIncomeDataPlotServer(id = "visualiseIncomeData")
     })
 }
 
