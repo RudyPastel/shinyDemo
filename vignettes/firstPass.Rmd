@@ -33,6 +33,8 @@ I will load them here for convenience but will no do so in the package code.
 ```{r}
 library(magrittr)
 library(ggplot2)
+library(ggridges)
+library(gganimate)
 ```
 
 
@@ -297,5 +299,156 @@ to me that they could be omitted on the dashboard.
 
 Here comes the challenge: represent the income distribution by race over the years.
 
+```{r}
+# Take the columns you need and format them
+incomeDistributtionVsYearByRace = incomeDistribution[, c('income_distribution', 'income_bracket' , 'year', 'race')]
+summary(incomeDistributtionVsYearByRace)
+
+orderedBrackets = c(
+   "Under $15,000",
+   "$15,000 to $24,999",
+   "$25,000 to $34,999",
+   "$35,000 to $49,999",
+   "$50,000 to $74,999",
+   "$75,000 to $99,999",
+   "$100,000 to $149,999",
+   "$150,000 to $199,999",
+   "$200,000 and over"
+)
+incomeDistributtionVsYearByRace$income_bracket = factor(
+  x = incomeDistributtionVsYearByRace$income_bracket, 
+  levels = orderedBrackets, labels = orderedBrackets, ordered = TRUE)
+summary(incomeDistributtionVsYearByRace)
+
+```
+
+Ready to plot 
 
 
+```{r}
+# Plot one year
+ggplot(data = incomeDistributtionVsYearByRace[incomeDistributtionVsYearByRace$year == 2019,], 
+       mapping = aes(x = income_bracket, 
+                     y = income_distribution, 
+                     fill = race)) +
+  geom_col( alpha = 0.5) + 
+  facet_grid(year~race) + 
+  labs(
+    title = 'Income distribution by racial group in 2019 in USA',
+    y = 'Group fraction',
+    x = 'Income bracket',
+    fill = 'Racial Group'
+  )+
+  scale_x_discrete(guide = guide_axis(angle = 90)) 
+```
+
+This is fine to compare income distribution for one year.
+
+```{r}
+# Plot all the years
+ggplot(data = incomeDistributtionVsYearByRace[,], 
+       mapping = aes(x = income_bracket, 
+                     y = income_distribution, 
+                     fill = race)) +
+  geom_col( alpha = 0.5) + 
+  facet_grid(year~race) + 
+  labs(
+    title = 'Income distribution by racial group over the years in USA',
+    y = 'Group fraction',
+    x = 'Income bracket',
+    fill = 'Racial Group'
+  )+
+  scale_x_discrete(guide = guide_axis(angle = 90)) 
+```
+
+When comparing across time, this is no longer readable. Maybe an animation.
+
+```{r}
+# Animate all the years
+ggplot(data = incomeDistributtionVsYearByRace, 
+       mapping = aes(x = income_bracket, 
+                     y = income_distribution, 
+                     fill = race)) +
+  facet_grid(.~race) + 
+  geom_col( alpha = 0.5) + 
+  labs(
+    title = 'Income distribution by racial group in USA in {floor(frame_time)}',
+    y = 'Group fraction',
+    x = 'Income bracket',
+    fill = 'Racial Group'
+  )+
+  scale_x_discrete(guide = guide_axis(angle = 90))  + 
+  transition_time(year)
+  
+```
+Let us try to stach the distributions vertically.
+
+
+```{r}
+# One year
+rawPlot = ggplot(data = incomeDistributtionVsYearByRace[incomeDistributtionVsYearByRace$year == 2019,], 
+       mapping = aes(x = unclass(income_bracket), 
+                     y = race, 
+                     fill = race, 
+                     height = income_distribution)) +
+  geom_density_ridges2(stat  = "identity", alpha = 0.5) + 
+  facet_wrap(year~.) + 
+  labs(
+    title = 'Income distribution by racial group in 2019 in USA',
+    y = 'Group fraction',
+    x = 'Income bracket',
+    fill = 'Racial Group'
+  ) +
+  scale_x_continuous(
+    labels = levels(incomeDistributtionVsYearByRace$income_bracket),
+    breaks = sort(unique(unclass(incomeDistributtionVsYearByRace$income_bracket))), 
+    guide = guide_axis(angle = 90)) 
+rawPlot
+
+# All the years
+rawPlot = ggplot(data = incomeDistributtionVsYearByRace, 
+       mapping = aes(x = unclass(income_bracket), 
+                     y = race, 
+                     fill = race, 
+                     height = income_distribution)) +
+  geom_density_ridges2(stat  = "identity", alpha = 0.5) + 
+  facet_wrap(year~.) + 
+  labs(
+    title = 'Income distribution by racial group in 2019 in USA',
+    y = 'Group fraction',
+    x = 'Income bracket',
+    fill = 'Racial Group'
+  ) +
+  scale_x_continuous(
+    labels = levels(incomeDistributtionVsYearByRace$income_bracket),
+    breaks = sort(unique(unclass(incomeDistributtionVsYearByRace$income_bracket))), 
+    guide = guide_axis(angle = 90)) 
+rawPlot
+
+```
+
+
+The second plot is a bit too rich to be showed all at once. I guess an animation 
+would make it easier to read.
+
+```{r}
+ggplot(data = incomeDistributtionVsYearByRace, 
+       mapping = aes(x = unclass(income_bracket), 
+                     y = race, 
+                     fill = race, 
+                     height = income_distribution)) +
+  geom_density_ridges2(stat  = "identity", alpha = 0.5) + 
+  labs(
+    title = 'Income distribution by racial group in the USA in {floor(frame_time)}',
+    y = 'Group fraction',
+    x = 'Income bracket',
+    fill = 'Racial Group'
+  ) +
+  scale_x_continuous(
+    labels = levels(incomeDistributtionVsYearByRace$income_bracket),
+    breaks = sort(unique(unclass(incomeDistributtionVsYearByRace$income_bracket))), 
+    guide = guide_axis(angle = 90)) + 
+  transition_time(year)
+```
+The user should be able to pick across the global view, the animation or a yearly
+view. I prefer to stick to the discrete versions.
