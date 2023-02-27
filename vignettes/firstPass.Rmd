@@ -454,5 +454,70 @@ The user should be able to pick across the global view, the animation or a yearl
 view. I prefer to stick to the discrete versions.
 
 
-## income_bracket + year ~ race
+## income_bracket + income_bracket + year ~ race
 
+Let us focus on time evoluation for each race.
+
+```{r}
+# Take the columns you need and format them
+incomeDistributtionVsYearByRace = incomeDistribution[, c('income_distribution', 'income_bracket' , 'year', 'race')]
+summary(incomeDistributtionVsYearByRace)
+
+orderedBrackets = c(
+   "Under $15,000",
+   "$15,000 to $24,999",
+   "$25,000 to $34,999",
+   "$35,000 to $49,999",
+   "$50,000 to $74,999",
+   "$75,000 to $99,999",
+   "$100,000 to $149,999",
+   "$150,000 to $199,999",
+   "$200,000 and over"
+)
+incomeDistributtionVsYearByRace$income_bracket = factor(
+  x = incomeDistributtionVsYearByRace$income_bracket, 
+  levels = orderedBrackets, labels = orderedBrackets, ordered = TRUE)
+```
+We already know the data.
+
+
+```{r}
+# plot for black only
+ggplot(data = incomeDistributtionVsYearByRace[incomeDistributtionVsYearByRace$race == 'Black Alone',], 
+       mapping = aes(x = year, 
+                     y = income_distribution, 
+                     group = income_bracket,
+                     linetype = income_bracket, 
+                     colour = race)) +
+  geom_line() +
+  labs(
+    title = 'Income distribution in racial group "Black Alone" in the USA',
+    x = 'Year',
+    y = 'Group fraction',
+    linetype = 'Income bracket',
+    colour = 'Racial group'
+  )
+```
+
+Not readable. I guess showing all the races makes it even worse
+
+```{r}
+# plot for black only
+ggplot(data = incomeDistributtionVsYearByRace[,], 
+       mapping = aes(x = year, 
+                     y = income_distribution, 
+                     group = income_bracket,
+                     linetype = income_bracket, 
+                     colour = race)) +
+  geom_line() +
+  labs(
+    title = 'Income distribution by racial group in the USA',
+    x = 'Year',
+    y = 'Group fraction',
+    linetype = 'Income bracket',
+    colour = 'Racial group'
+  ) +
+  facet_grid(race~.)
+```
+
+Unreadable. Do not show it.
