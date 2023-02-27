@@ -21,6 +21,7 @@ Suggests:
     tufte
 VignetteBuilder: knitr
 Imports: 
+    config,
     gganimate,
     ggplot2,
     ggridges,
