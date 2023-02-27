@@ -54,7 +54,7 @@ NULL
 #' @rdname triplet
 #' @export
 createTripletTemplate = function(tripletName, path){
-  templateText = readLines(system.file(package = 'regressionTestDashboard', 'templates', 'templateTriplet.R'))
+  templateText = readLines(system.file(package = 'shinyDemo', 'templates', 'templateTriplet.R'))
   tripletName  = gsub(pattern = '[[:space:][:punct:]]', replacement = '', x = tripletName)
   templateText = gsub(pattern = "<tripletName>", replacement = tripletName, x = templateText)
   if (!dir.exists(path)){ dir.create(path = path, recursive = TRUE)}
