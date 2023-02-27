@@ -37,11 +37,12 @@ plotIncomeDistribution = function(year){
 #' @rdname plotIncomeDistribution
 plotIncomeMedian = function(includeMarginOfError = FALSE){
   # Get the raw data and format it
-  incomeDistribution = getIncomeDataSet()
-  yLimits = c(round( range(incomeDistribution$income_median + incomeDistribution$income_med_moe, na.rm = TRUE)[1], digits = - 3) - 5000,
-              round( range(incomeDistribution$income_median + incomeDistribution$income_med_moe, na.rm = TRUE)[2], digits = - 3) + 5000)
+  medianIncomeVsYearByRace = getIncomeDataSet()[, c('income_median', 'income_med_moe', 'year', 'race')]
+  medianIncomeVsYearByRace = medianIncomeVsYearByRace[!duplicated(medianIncomeVsYearByRace), ]
+  yLimits = c(round( range(medianIncomeVsYearByRace$income_median + medianIncomeVsYearByRace$income_med_moe, na.rm = TRUE)[1], digits = - 3) - 5000,
+              round( range(medianIncomeVsYearByRace$income_median + medianIncomeVsYearByRace$income_med_moe, na.rm = TRUE)[2], digits = - 3) + 5000)
   # Plot the data
-  rawPlot = ggplot2::ggplot(data = incomeDistribution,
+  rawPlot = ggplot2::ggplot(data = medianIncomeVsYearByRace,
                    mapping = ggplot2::aes(x = year, y = income_median, colour = race)) +
     ggplot2::geom_line() +
     ggplot2::labs(
@@ -72,11 +73,13 @@ plotIncomeMedian = function(includeMarginOfError = FALSE){
 #' @rdname plotIncomeDistribution
 plotIncomeMean = function(includeMarginOfError = FALSE){
   # Get the raw data and format it
-  incomeDistribution = getIncomeDataSet()
-  yLimits = c(round( range(incomeDistribution$income_mean + incomeDistribution$income_mean_moe, na.rm = TRUE)[1], digits = - 3) - 5000,
-              round( range(incomeDistribution$income_mean + incomeDistribution$income_mean_moe, na.rm = TRUE)[2], digits = - 3) + 5000)
+  meanIncomeVsYearByRace = getIncomeDataSet()[, c('income_mean', 'income_mean_moe' , 'year', 'race')]
+  meanIncomeVsYearByRace = meanIncomeVsYearByRace[!duplicated(meanIncomeVsYearByRace), ]
+  yLimits = c(round( range(meanIncomeVsYearByRace$income_mean + meanIncomeVsYearByRace$income_mean_moe, na.rm = TRUE)[1], digits = - 3) - 5000,
+              round( range(meanIncomeVsYearByRace$income_mean + meanIncomeVsYearByRace$income_mean_moe, na.rm = TRUE)[2], digits = - 3) + 5000)
+
   # Plot the data
-  rawPlot = ggplot2::ggplot(data = incomeDistribution,
+  rawPlot = ggplot2::ggplot(data = meanIncomeVsYearByRace,
                             mapping = ggplot2::aes(x = year, y = income_mean, colour = race)) +
     ggplot2::geom_line() +
     ggplot2::labs(
@@ -97,6 +100,33 @@ plotIncomeMean = function(includeMarginOfError = FALSE){
           ymax = income_mean + income_mean_moe)
       )
   }
+
+  #Return the plot
+  return(rawPlot)
+
+
+}
+
+#' @rdname plotIncomeDistribution
+plotHouseholdNumber = function(){
+  # Get the raw data and format it
+  numberVsYearByRace = getIncomeDataSet()[, c('number', 'year', 'race')]
+  numberVsYearByRace = numberVsYearByRace[!duplicated(numberVsYearByRace), ]
+
+  # Plot the data
+  rawPlot = ggplot2::ggplot(
+    data = numberVsYearByRace,
+    mapping = ggplot2::aes(x = year, y = number, colour = race)
+    ) +
+    ggplot2::geom_line() +
+    ggplot2::labs(
+      title = 'Number of household by racial group over the years in USA',
+      x = 'Year',
+      y = 'Number of households',
+      colour = 'Racial Group'
+    ) +
+    ggplot2::theme(text = ggplot2::element_text(size = 16))
+
 
   #Return the plot
   return(rawPlot)

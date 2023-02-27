@@ -17,7 +17,7 @@ visualiseIncomeDataSelectionUi = function(id){
                     'Income distribution' = 'incomeDistribution',
                     'Median income' = 'medianIncome',
                     'Mean income' = 'meanIncome',
-                    'Number of households' = 'householdNumbe'
+                    'Number of households' = 'householdNumber'
                   ),
                   selected = 'incomeDistribution')
     )
@@ -88,6 +88,8 @@ visualiseIncomeDataPlotServer  = function(id){
         } else if (input$selection == 'meanIncome') {
           req(input$includeMarginOfError)
           thePlot = plotIncomeMean(includeMarginOfError = as.logical(input$includeMarginOfError))
+        } else if (input$selection == 'householdNumber') {
+          thePlot = plotHouseholdNumber()
         } else {
           thePlot = plotPlaceHolder()
         }
