@@ -9,34 +9,43 @@ NULL
 
 #' @rdname visualiseIncomeData
 visualiseIncomeDataMenuItem = function(id){
-    shinydashboard::menuItem(
-        text = "Visualisation",
-        tabName = shiny::NS(id, "visualiseIncomeData")
-    )
+  shinydashboard::menuItem(
+    text = "Visualisation",
+    tabName = shiny::NS(id, "visualiseIncomeData")
+  )
 }
 
 #' @rdname visualiseIncomeData
 visualiseIncomeDataTabItem = function(id){
 
 
-    # Build the tab item
-    shinydashboard::tabItem(
-        tabName = shiny::NS(id, "visualiseIncomeData"),
+  # Build the tab item
+  shinydashboard::tabItem(
+    tabName = shiny::NS(id, "visualiseIncomeData"),
 
-        # Build the UI here
-        # Remember to wrap all inputId statements as follows:
-        # inputId = shiny::NS(id, "<myInputId>")
+    # Build the UI here
+    # Remember to wrap all inputId statements as follows:
+    # inputId = shiny::NS(id, "<myInputId>")
+
+    fluidRow(
+      column(width = 4),
+      column(width = 4,'Select quantities'),
+      column(width = 4, 'Optionally options')
+    ),
+    fluidRow(
+      column(width = 12, 'Show plots')
     )
+  )
 }
 
 
 #' @rdname visualiseIncomeData
 visualiseIncomeDataServer = function(id){
-    shiny::moduleServer(
-        id = id,
-        module =  function(input, output, session) {
-            # Build the server here
-            # There is no need to wrap inputId statements
-        })
+  shiny::moduleServer(
+    id = id,
+    module =  function(input, output, session) {
+      # Build the server here
+      # There is no need to wrap inputId statements
+    })
 }
 
