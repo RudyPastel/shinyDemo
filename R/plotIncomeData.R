@@ -12,19 +12,19 @@ plotIncomeDistribution = function(year){
   # Get the raw data and format it
   incomeDistribution = getIncomeDataSet()
   yLimits = c(floor(min(incomeDistribution$income_distribution, na.rm = TRUE)),
-             ceiling(max(incomeDistribution$income_distribution, na.rm = TRUE)))
+              ceiling(max(incomeDistribution$income_distribution, na.rm = TRUE)))
   incomeDistribution = incomeDistribution[incomeDistribution$year == year, ]
 
   # Plot the data
   ggplot2::ggplot(data = incomeDistribution,
-         mapping = ggplot2::aes(x = income_bracket,
-                       y = income_distribution,
-                       fill = race)) +
+                  mapping = ggplot2::aes(x = income_bracket,
+                                         y = income_distribution,
+                                         fill = race)) +
     ggplot2::geom_col() +
     ggplot2::facet_grid(year~race, drop = FALSE) +
     ggplot2::labs(
       title = sprintf(fmt = 'Income distribution by racial group in %s in USA', year),
-      y = 'Group fraction',
+      y = 'Group percentage',
       x = 'Income bracket',
       fill = 'Racial Group'
     )+
@@ -43,15 +43,17 @@ plotIncomeMedian = function(includeMarginOfError = FALSE){
               round( range(medianIncomeVsYearByRace$income_median + medianIncomeVsYearByRace$income_med_moe, na.rm = TRUE)[2], digits = - 3) + 5000)
   # Plot the data
   rawPlot = ggplot2::ggplot(data = medianIncomeVsYearByRace,
-                   mapping = ggplot2::aes(x = year, y = income_median, colour = race)) +
+                            mapping = ggplot2::aes(x = year, y = income_median, colour = race)) +
     ggplot2::geom_line() +
     ggplot2::labs(
       title = 'Income median by racial group in USA',
       x = 'Year',
-      y = 'Income median',
+      y = 'Income median in $',
       colour = 'Racial Group'
     ) +
-    ggplot2::scale_y_continuous(limits = yLimits)  +
+    ggplot2::scale_y_continuous(
+      limits = yLimits,
+      labels = function(x){sprintf(fmt = '%sk', format(x / 1000, scientific = FALSE))})  +
     ggplot2::theme(text = ggplot2::element_text(size = 16))
 
   # Optionally include the margin of error
@@ -61,7 +63,7 @@ plotIncomeMedian = function(includeMarginOfError = FALSE){
         mapping = ggplot2::aes(
           ymin = income_median - income_med_moe,
           ymax = income_median + income_med_moe)
-        )
+      )
   }
 
   #Return the plot
@@ -85,10 +87,12 @@ plotIncomeMean = function(includeMarginOfError = FALSE){
     ggplot2::labs(
       title = 'Income mean by racial group in USA',
       x = 'Year',
-      y = 'Income mean',
+      y = 'Income mean in $',
       colour = 'Racial Group'
     ) +
-    ggplot2::scale_y_continuous(limits = yLimits)  +
+    ggplot2::scale_y_continuous(
+      limits = yLimits,
+      labels = function(x){sprintf(fmt = '%sk', format(x / 1000, scientific = FALSE))})  +
     ggplot2::theme(text = ggplot2::element_text(size = 16))
 
   # Optionally include the margin of error
@@ -116,15 +120,16 @@ plotHouseholdNumber = function(){
   # Plot the data
   rawPlot = ggplot2::ggplot(
     data = numberVsYearByRace,
-    mapping = ggplot2::aes(x = year, y = number, colour = race)
-    ) +
+    mapping = ggplot2::aes(x = year, y = number / 1e6, colour = race)
+  ) +
     ggplot2::geom_line() +
     ggplot2::labs(
-      title = 'Number of household by racial group over the years in USA',
+      title = 'Number of households by racial groups over the years in USA',
       x = 'Year',
-      y = 'Number of households',
+      y = 'Number of households in million',
       colour = 'Racial Group'
     ) +
+    ggplot2::scale_y_continuous(labels = function(x){format(x, scientific = FALSE)} ) +
     ggplot2::theme(text = ggplot2::element_text(size = 16))
 
 
