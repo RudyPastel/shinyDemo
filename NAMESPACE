@@ -2,3 +2,5 @@
 
 export(createTripletTemplate)
 export(startDashboard)
+import(magrittr)
+import(shiny)
