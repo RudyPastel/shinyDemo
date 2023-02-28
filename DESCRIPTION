@@ -17,6 +17,7 @@ RoxygenNote: 7.2.0
 Suggests: 
     knitr,
     rmarkdown,
+    testthat (>= 3.0.0),
     tufte
 VignetteBuilder: knitr
 Imports: 
@@ -27,3 +28,4 @@ Imports:
     magrittr,
     readr,
     shinydashboard
+Config/testthat/edition: 3
