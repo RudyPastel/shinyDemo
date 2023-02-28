@@ -27,5 +27,6 @@ Imports:
     ggridges,
     magrittr,
     readr,
+    shiny,
     shinydashboard
 Config/testthat/edition: 3
