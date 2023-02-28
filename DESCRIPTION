@@ -1,6 +1,6 @@
 Package: shinyDemo
 Title: Demonstrate my Shiny Programming Skills thanks to a Tidy Tuesdays data set
-Version: 0.0.0.9000
+Version: 1.0.0
 Authors@R: 
     person(given = "Rudy", 
            family = "Pastel", 
@@ -18,15 +18,13 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
-    tufte
+    tufte,
+    gganimate,
+    ggridges
 VignetteBuilder: knitr
 Imports: 
-    config,
-    gganimate,
     ggplot2,
-    ggridges,
     magrittr,
     readr,
     shiny,
     shinydashboard
-Config/testthat/edition: 3
