@@ -2,5 +2,6 @@
 
 export(createTripletTemplate)
 export(startDashboard)
+export(validateIncomeData)
 import(magrittr)
 import(shiny)

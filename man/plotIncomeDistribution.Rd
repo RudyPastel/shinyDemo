@@ -3,12 +3,18 @@
 \name{plotIncomeDistribution}
 \alias{plotIncomeDistribution}
 \alias{plotIncomeMedian}
+\alias{plotIncomeMean}
+\alias{plotHouseholdNumber}
 \alias{plotPlaceHolder}
 \title{Plot income data set}
 \usage{
 plotIncomeDistribution(year)
 
 plotIncomeMedian(includeMarginOfError = FALSE)
+
+plotIncomeMean(includeMarginOfError = FALSE)
+
+plotHouseholdNumber()
 
 plotPlaceHolder()
 }
