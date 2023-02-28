@@ -44,7 +44,7 @@ validateIncomeData = function(incomeDataSet){
   for (columnName in numericColumns){
     if (!is.numeric(incomeDataSet[[columnName]])){
       base::stop(
-        sprintf(fmt = 'Columns %s must be numeric.', paste(numericColumns, collapse = ', ')),
+        sprintf(fmt = 'Columns %s must be numeric. ', paste(numericColumns, collapse = ', ')),
         columnName, ' is not.'
       )
     }
@@ -96,7 +96,7 @@ validateIncomeData = function(incomeDataSet){
     if (any(is.na(incomeDataSet[[columnName]]))){
       base::warning(
         'Column ', columnName, ' contains missing value(s) at index ',
-        paste(head(is.na(incomeDataSet[[columnName]]), 10), collapse = ', '),
+        paste(head(which(is.na(incomeDataSet[[columnName]])), 10), collapse = ', '),
         '.'
       )
     }
