@@ -41,8 +41,6 @@ Obviously, you should try the app out.
 shinyDemo::startDashboard()
 ```
 
-<div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div>
-
 More importantly however, read, analyse and evaluate the code and its
 history.
 

@@ -37,7 +37,7 @@ data set  called `income_distribution.csv`.
 
 You can install the development version of `shinyDemo` from [GitHub](https://github.com/) with:
 
-``` r
+``` {r, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("RudyPastel/shinyDemo")
 ```
@@ -46,7 +46,7 @@ devtools::install_github("RudyPastel/shinyDemo")
 
 Obviously, you should try the app out.
 
-```{r example}
+```{r example, eval = FALSE}
 shinyDemo::startDashboard()
 ```
 
