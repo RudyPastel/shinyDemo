@@ -47,8 +47,7 @@ devtools::install_github("RudyPastel/shinyDemo")
 Obviously, you should try the app out.
 
 ```{r example}
-library(shinyDemo)
-## basic example code
+shinyDemo::startDashboard()
 ```
 
 More importantly however, read, analyse and evaluate the code and its history.
