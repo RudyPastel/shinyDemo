@@ -20,6 +20,14 @@ validateIncomeData = function(incomeDataSet){
     'year', 'race', 'number', 'income_median', 'income_med_moe',
     'income_mean', 'income_mean_moe', 'income_bracket', 'income_distribution'
   )
+  missingColumn = setdiff(expectedColumns, names(incomeDataSet))
+  if (length(missingColumn) > 0){
+    base::stop(
+      'Required column(s) ',
+      paste(missingColumn, collapse = ', '),
+      ' is/are missing.'
+    )
+  }
   base::stopifnot(all(expectedColumns %in% names(incomeDataSet)))
 
   # Check that columns are loaded with the expected class
