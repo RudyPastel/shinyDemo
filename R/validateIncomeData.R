@@ -3,7 +3,7 @@
 #' Controls that data set `incomeDataSet` fulfills the expectations of \pkg{shinyDemo}.
 #' When adding a new data set, future users will have confidence that it will work.
 #'
-#' @param incomeDataSet
+#' @param incomeDataSet A data frame matching the desription.
 #'
 #' @export
 #'
