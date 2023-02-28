@@ -5,8 +5,9 @@ A list of improvements worth considering.
 
 ## Necessary
 
-* Create a function to validate the income data set and test it
+* ~~Create a function to validate the income data set and test it~~
 * Write a simple shiny module test
+* More detailed tests
 
 
 ## Optional
