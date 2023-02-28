@@ -1,6 +1,7 @@
 #' Get income data set
 #'
-#' Some formatting is applied as well.
+#' Some formatting is applied as well. In particular, a `race_color` column is
+#' added to ensure that a given race is always represented with the same color.
 #'
 #'
 #' @includeRmd ./inst/documentation/dataDictionary.Rmd
@@ -38,13 +39,24 @@ getIncomeDataSet = function(){
     labels = orderedBrackets,
     ordered = TRUE)
 
-  # # Format the year
-  # orderedYear = sort(unique(incomeDistribution$year))
-  # incomeDistribution$year = factor(
-  #   x = incomeDistribution$year,
-  #   levels = orderedYear,
-  #   labels = orderedYear,
-  #   ordered = TRUE)
+  # Create race color
+  race_color = c(
+    "All Races" = "mediumblue",
+    "White Alone" = "peachpuff",
+    "White Alone, Not Hispanic" =  "ivory",
+    "Hispanic (Any Race)" = "gold4",
+    "Asian Alone or in Combination" = "khaki4",
+    "Asian Alone" = "khaki",
+    "Black Alone or in Combination" = "saddlebrown",
+    "Black Alone" = 'black'
+  )
+
+  incomeDistribution$race_color = race_color[incomeDistribution$race]
+  incomeDistribution$race_color = factor(
+    x = incomeDistribution$race_color,
+    levels = race_color,
+    labels = race_color,
+    ordered = TRUE)
 
   # Format race
   orderedRace = c(
