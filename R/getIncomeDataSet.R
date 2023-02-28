@@ -12,7 +12,7 @@ getIncomeDataSet = function(){
 
   # Read the raw file
   filePath =  system.file(package = 'shinyDemo', 'extdata', config::get('dataset'))
-  incomeDistribution <- readr::read_csv(file = filePath, show_col_types = FALSE, col_types = 'c')
+  incomeDistribution <- readr::read_csv(file = filePath, show_col_types = FALSE)
 
   # A basic check in case the user provides a new data set
   expectedColumns = c(
