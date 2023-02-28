@@ -58,8 +58,8 @@ plotIncomeMedian = function(includeMarginOfError = FALSE){
       labels = function(x){sprintf(fmt = '%sk', format(x / 1000, scientific = FALSE))})  +
     ggplot2::theme(text = ggplot2::element_text(size = 16),
                    legend.position = 'bottom')  +
-    ggplot2::scale_color_manual(drop = FALSE, values = levels(incomeDistribution$race_color),
-                                breaks = levels(incomeDistribution$race) )
+    ggplot2::scale_color_manual(drop = FALSE, values = levels(medianIncomeVsYearByRace$race_color),
+                                breaks = levels(medianIncomeVsYearByRace$race) )
 
   # Optionally include the margin of error
   if (includeMarginOfError){
@@ -80,7 +80,7 @@ plotIncomeMedian = function(includeMarginOfError = FALSE){
 #' @rdname plotIncomeDistribution
 plotIncomeMean = function(includeMarginOfError = FALSE){
   # Get the raw data and format it
-  meanIncomeVsYearByRace = getIncomeDataSet()[, c('income_mean', 'income_mean_moe' , 'year', 'race')]
+  meanIncomeVsYearByRace = getIncomeDataSet()[, c('income_mean', 'income_mean_moe' , 'year', 'race', 'race_color')]
   meanIncomeVsYearByRace = meanIncomeVsYearByRace[!duplicated(meanIncomeVsYearByRace), ]
   yLimits = c(round( range(meanIncomeVsYearByRace$income_mean + meanIncomeVsYearByRace$income_mean_moe, na.rm = TRUE)[1], digits = - 3) - 5000,
               round( range(meanIncomeVsYearByRace$income_mean + meanIncomeVsYearByRace$income_mean_moe, na.rm = TRUE)[2], digits = - 3) + 5000)
@@ -100,8 +100,8 @@ plotIncomeMean = function(includeMarginOfError = FALSE){
       labels = function(x){sprintf(fmt = '%sk', format(x / 1000, scientific = FALSE))})  +
     ggplot2::theme(text = ggplot2::element_text(size = 16),
                    legend.position = 'bottom')  +
-    ggplot2::scale_color_manual(drop = FALSE, values = levels(incomeDistribution$race_color),
-                                breaks = levels(incomeDistribution$race) )
+    ggplot2::scale_color_manual(drop = FALSE, values = levels(meanIncomeVsYearByRace$race_color),
+                                breaks = levels(meanIncomeVsYearByRace$race) )
 
   # Optionally include the margin of error
   if (includeMarginOfError){
@@ -122,7 +122,7 @@ plotIncomeMean = function(includeMarginOfError = FALSE){
 #' @rdname plotIncomeDistribution
 plotHouseholdNumber = function(){
   # Get the raw data and format it
-  numberVsYearByRace = getIncomeDataSet()[, c('number', 'year', 'race')]
+  numberVsYearByRace = getIncomeDataSet()[, c('number', 'year', 'race', 'race_color')]
   numberVsYearByRace = numberVsYearByRace[!duplicated(numberVsYearByRace), ]
 
   # Plot the data
@@ -140,8 +140,8 @@ plotHouseholdNumber = function(){
     ggplot2::scale_y_continuous(labels = function(x){format(x, scientific = FALSE)} ) +
     ggplot2::theme(text = ggplot2::element_text(size = 16),
                    legend.position = 'bottom') +
-    ggplot2::scale_color_manual(drop = FALSE, values = levels(incomeDistribution$race_color),
-                                breaks = levels(incomeDistribution$race) )
+    ggplot2::scale_color_manual(drop = FALSE, values = levels(numberVsYearByRace$race_color),
+                                breaks = levels(numberVsYearByRace$race) )
 
 
   #Return the plot
